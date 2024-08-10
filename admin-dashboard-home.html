@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+<body>
+
+<!-- Static Background Image -->
+    <div class="background"></div>
+	
+    <header>
+        <div class="header-content">
+            <h1>Admin Dashboard</h1>
+            <p>View registered teams and their details.</p>
+        </div>
+    </header>
+
+    <!-- Admin Login Form -->
+    <div class="login-container">
+        <h2>Admin Login</h2>
+        <form id="adminLoginForm">
+            <label for="leaderName">Username:</label>
+            <input type="text" id="leaderName" name="leaderName" required>
+
+            <label for="leaderPassword">Password:</label>
+            <input type="password" id="leaderPassword" name="leaderPassword" required>
+
+            <button type="submit">Login</button>
+        </form>
+        <p id="loginMessage"></p>
+    </div>
+
+    <div class="container">
+        <h2>Registered Teams</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Team Name</th>
+                    <th>Leader Name</th>
+                    <th>Player ID</th>
+                    <th>In-Game Name</th>
+                    <th>ID Level</th>
+                    <th>Slot Number</th>
+                </tr>
+            </thead>
+            <tbody id="teamData">
+                <!-- Dynamic data will be populated here -->
+            </tbody>
+        </table>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <p>Follow our gaming journey on <strong>PixelVortex Gaming</strong>!</p>
+            <div class="social-links">
+                <a href="https://www.youtube.com/channel/YOUR_CHANNEL_ID" target="_blank" title="YouTube" class="social-icon">
+                    <i class="fab fa-youtube"></i>
+                </a>
+                <a href="https://discord.gg/YOUR_DISCORD_LINK" target="_blank" title="Discord" class="social-icon">
+                    <i class="fab fa-discord"></i>
+                </a>
+            </div>
+            <p>&copy; 2024 PixelVortex Gaming. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Function to fetch and display registered teams
+        async function fetchTeams() {
+            const response = await fetch('http://localhost:5000/api/teams');
+            const teams = await response.json();
+            const teamDataElement = document.getElementById('teamData');
+
+            // Clear previous data
+            teamDataElement.innerHTML = '';
+
+            // Populate the table with team data
+            teams.forEach(team => {
+                const row = `
+                    <tr>
+                        <td>${team.teamName}</td>
+                        <td>${team.leaderName}</td>
+                        <td>${team.playerId}</td>
+                        <td>${team.inGameName}</td>
+                        <td>${team.idLevel}</td>
+                        <td>${team.slotNumber}</td>
+                    </tr>
+                `;
+                teamDataElement.innerHTML += row;
+            });
+        }
+
+        // Event listener for admin login
+        document.getElementById('adminLoginForm').addEventListener('submit', async function (event) {
+            event.preventDefault();
+
+            const leaderName = document.getElementById('leaderName').value;
+            const leaderPassword = document.getElementById('leaderPassword').value;
+
+            const response = await fetch('http://localhost:5000/api/admin/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ leaderName, leaderPassword }),
+            });
+
+            const messageElement = document.getElementById('loginMessage');
+            if (response.ok) {
+                messageElement.textContent = 'Login successful!';
+                messageElement.style.color = 'green';
+                fetchTeams(); // Fetch teams on successful login
+            } else {
+                const errorMessage = await response.text();
+                messageElement.textContent = errorMessage;
+                messageElement.style.color = 'red';
+            }
+        });
+    </script>
+</body>
+</html>

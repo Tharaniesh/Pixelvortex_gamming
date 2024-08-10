@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- Static Background Image -->
+    <div class="background"></div>
+	
+    <div class="container">
+        <h2>Admin Login</h2>
+        <form id="adminLoginForm">
+            <label for="username">Username:</label>
+            <input type="text" id="username" required>
+
+            <label for="password">Password:</label>
+            <input type="password" id="password" required>
+
+            <button type="submit">Login</button>
+        </form>
+        <p id="error-message" style="color: red;"></p>
+    </div>
+
+    <script>
+        // Admin credentials
+        const adminCredentials = {
+            username: "admin", // Set your admin username
+            password: "password123" // Set your admin password
+        };
+
+        document.getElementById('adminLoginForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent the form from submitting
+
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            // Check credentials
+            if (username === adminCredentials.username && password === adminCredentials.password) {
+                // Redirect to admin dashboard
+                window.location.href = 'admin-dashboard-home.html'; // Change to your admin dashboard page
+            } else {
+                document.getElementById('error-message').innerText = "Invalid username or password.";
+            }
+        });
+    </script>
+</body>
+</html>

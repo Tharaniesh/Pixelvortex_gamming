@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Team Information</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- Static Background Image -->
+    <div class="background"></div>
+	
+    <header>
+        <div class="header-content">
+            <h1>Team Information</h1>
+            <p>Provide your team details below.</p>
+        </div>
+    </header>
+
+    <div class="container">
+        <form id="teamInfoForm">
+            <h2>Team Details</h2>
+            <label for="teamName">Team Name:</label>
+            <input type="text" id="teamName" name="teamName" required>
+
+            <label for="leaderName">Leader Name:</label>
+            <input type="text" id="leaderName" name="leaderName" required>
+
+            <label for="leaderEmail">Leader Email:</label>
+            <input type="email" id="leaderEmail" name="leaderEmail" required>
+
+            <button type="button" onclick="goToPlayerDetails()">Next: Player Details</button>
+        </form>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <p>Follow our gaming journey on <strong>PixelVortex Gaming</strong>!</p>
+            <div class="social-links">
+                <a href="https://youtube.com/@pixelvortex?si=7VKyZeQ2PazY-4KK" target="_blank" class="social-icon">YouTube</a>
+                <a href="https://discord.com/invite/G3ZxR5F4" target="_blank" class="social-icon">Discord</a>
+            </div>
+            <p>&copy; 2024 PixelVortex Gaming. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        function goToPlayerDetails() {
+            // Save team information to session storage
+            const teamName = document.getElementById('teamName').value;
+            const leaderName = document.getElementById('leaderName').value;
+            const leaderEmail = document.getElementById('leaderEmail').value;
+
+            sessionStorage.setItem('teamName', teamName);
+            sessionStorage.setItem('leaderName', leaderName);
+            sessionStorage.setItem('leaderEmail', leaderEmail);
+
+            // Redirect to player details page
+            window.location.href = 'player-details.html';
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,44 @@
+CREATE DATABASE bgmi_registration;
+
+USE bgmi_registration;
+
+CREATE TABLE team_details (
+    team_id INT AUTO_INCREMENT PRIMARY KEY,
+    team_name VARCHAR(255) NOT NULL,
+    leader_name VARCHAR(255) NOT NULL,
+    leader_email VARCHAR(255) NOT NULL,
+    leader_mobile INT(15) NOT NULL,
+    leader_player_id INT NOT NULL,
+    leader_in_game_name VARCHAR(255) NOT NULL,
+    leader_id_level INT NOT NULL,
+    player1_id INT NOT NULL,
+    player1_name VARCHAR(255) NOT NULL,
+    player1_level INT NOT NULL,
+    player2_id INT NOT NULL,
+    player2_name VARCHAR(255) NOT NULL,
+    player2_level INT NOT NULL,
+    player3_id INT NOT NULL,
+    player3_name VARCHAR(255) NOT NULL,
+    player3_level INT NOT NULL,
+    player4_id INT NOT NULL,
+    player4_name VARCHAR(255) NOT NULL,
+    player4_level INT NOT NULL,
+    sub1_id INT DEFAULT NULL,
+    sub1_name VARCHAR(255) DEFAULT NULL,
+    sub2_id INT DEFAULT NULL,
+    sub2_name VARCHAR(255) DEFAULT NULL
+);
+
+CREATE TABLE room_details (
+    room_id INT AUTO_INCREMENT PRIMARY KEY,
+    team_id INT,
+    room_number INT,
+    slot_number INT,
+    FOREIGN KEY (team_id) REFERENCES team_details(team_id)
+);
+
+CREATE TABLE admins (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(50) NOT NULL,
+    password VARCHAR(255) NOT NULL
+);
